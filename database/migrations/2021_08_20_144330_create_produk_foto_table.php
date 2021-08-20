@@ -20,7 +20,7 @@ class CreateProdukFotoTable extends Migration
             $table->text('deskripsi')->nullable();
             $table->timestamps();
 
-            $table->foreign('produk_foto_id')->on('produk')->references('id')->onUpdate('CASCADE')->onDelete('CASCADE');    
+            $table->foreign('produk_id')->on('produk')->references('id')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
