@@ -18,4 +18,9 @@ class KategoriService
         $this->repository = $repository;
     }
 
+    public function getAll()
+    {
+        return $this->repository->getAll();
+    }
+
 }

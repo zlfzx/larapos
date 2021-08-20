@@ -17,4 +17,14 @@ class KategoriRepository extends BaseRepository
     {
         return $this->model->create($attributes);
     }
+
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
+    public function getWhere(array $where)
+    {
+        return $this->model->where($where)->get();
+    }
 }
