@@ -27,6 +27,10 @@ class CreateProdukTable extends Migration
             $table->integer('markup_persen')->default(0);
             $table->integer('aktif')->default(1);
             $table->timestamps();
+
+            $table->foreign('suplier_id')->on('suplier')->references('id')->onUpdate('SET NULL')->onDelete('SET NULL');
+            $table->foreign('kategori_id')->on('kategori')->references('id')->onUpdate('SET NULL')->onDelete('SET NULL');
+            $table->foreign('satuan_id')->on('satuan')->references('id')->onUpdate('SET NULL')->onDelete('SET NULL');
         });
     }
 

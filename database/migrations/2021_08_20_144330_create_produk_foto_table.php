@@ -15,10 +15,12 @@ class CreateProdukFotoTable extends Migration
     {
         Schema::create('produk_foto', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('produk_foto_id');
+            $table->unsignedBigInteger('produk_id');
             $table->string('file');
             $table->text('deskripsi')->nullable();
             $table->timestamps();
+
+            $table->foreign('produk_foto_id')->on('produk')->references('id')->onUpdate('CASCADE')->onDelete('CASCADE');    
         });
     }
 
