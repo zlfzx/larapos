@@ -44,27 +44,27 @@ trait ApiResponse
         return $this->responseJson($response);
     }
 
-    public function badRequest($data, string $message = '')
+    public function badRequest($data = null, string $message = '')
     {
         return $this->error($data, Response::HTTP_BAD_REQUEST, $message);
     }
 
-    public function unauthorized($data, string $message = '')
+    public function unauthorized($data = null, string $message = '')
     {
         return $this->error($data, Response::HTTP_UNAUTHORIZED, $message);
     }
 
-    public function forbidden($data, string $message = '')
+    public function forbidden($data = null, string $message = '')
     {
         return $this->error($data, Response::HTTP_FORBIDDEN, $message);
     }
 
-    public function notFound($data, string $message = '')
+    public function notFound($data = null, string $message = '')
     {
         return $this->error($data, Response::HTTP_NOT_FOUND, $message);
     }
 
-    public function unprocessable($data, string $message = '')
+    public function unprocessable($data = null, string $message = '')
     {
         return $this->error($data, Response::HTTP_UNPROCESSABLE_ENTITY, $message);
     }
