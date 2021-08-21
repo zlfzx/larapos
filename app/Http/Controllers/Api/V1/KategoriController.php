@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Kategori\KategoriRequest;
 use App\Services\KategoriService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -36,45 +37,57 @@ class KategoriController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param KategoriRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(KategoriRequest $request)
     {
-        //
+        $response = $this->service->create($request->all());
+
+        return $this->created($response);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(int $id)
     {
-        //
+        $response = $this->service->find($id);
+
+        if (!$response) {
+            return $this->notFound();
+        }
+
+        return $this->ok($response);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param KategoriRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(KategoriRequest $request, int $id)
     {
-        //
+        $response = $this->service->update($request->all(), $id);
+
+        return $this->ok($response);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $response = $this->service->delete($id);
+
+        return $this->ok($response);
     }
 }
