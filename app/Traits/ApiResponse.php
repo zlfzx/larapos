@@ -23,7 +23,7 @@ trait ApiResponse
         $response = $this->prepareResponse($message, $statusCode);
         $response['data'] = $data;
 
-        return $this->json($response);
+        return $this->responseJson($response);
     }
 
     public function ok($data, string $message = '')
@@ -41,7 +41,7 @@ trait ApiResponse
         $response = $this->prepareResponse($message, $statusCode);
         $response['errors'] = $errors;
 
-        return $this->json($response);
+        return $this->responseJson($response);
     }
 
     public function badRequest($data, string $message = '')
@@ -69,7 +69,7 @@ trait ApiResponse
         return $this->error($data, Response::HTTP_UNPROCESSABLE_ENTITY, $message);
     }
 
-    private function json($response)
+    private function responseJson($response)
     {
         return response()->json($response);
     }
