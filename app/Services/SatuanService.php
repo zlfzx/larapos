@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Repositories\Satuan\SatuanRepository;
 
-class SatuanService
+class SatuanService extends BaseService
 {
     /**
      * @var SatuanRepository
@@ -15,6 +15,7 @@ class SatuanService
 
     public function __construct(SatuanRepository $repository)
     {
+        parent::__construct($repository);
         $this->repository = $repository;
     }
 

@@ -12,7 +12,7 @@ class Kategori extends Model
 
     protected $table = 'kategori';
 
-    protected $fillable = ['nama'];
+    protected $guarded = [];
 
     protected function serializeDate(DateTimeInterface $date)
     {

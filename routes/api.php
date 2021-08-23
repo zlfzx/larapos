@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
     Route::apiResource('kategori', 'KategoriController')->names('api.v1.kategori');
+    Route::apiResource('satuan', 'SatuanController')->names('api.v1.satuan');
 });

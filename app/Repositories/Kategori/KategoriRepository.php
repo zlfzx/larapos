@@ -13,33 +13,4 @@ class KategoriRepository extends BaseRepository
         $this->model = $model;
     }
 
-    public function getAll()
-    {
-        return $this->model->all();
-    }
-
-    public function getWhere(array $where)
-    {
-        return $this->model->where($where)->get();
-    }
-
-    public function create(array $attributes)
-    {
-        return $this->model->create($attributes);
-    }
-
-    public function update(array $data, int $id)
-    {
-        $kategori = $this->find($id);
-        if ($kategori != null) {
-            $kategori->update($data);
-        }
-
-        return $kategori;
-    }
-
-    public function destroy(int $id)
-    {
-        return $this->model->destroy($id);
-    }
 }
