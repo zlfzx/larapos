@@ -1,11 +1,9 @@
-<x-app-layout>
-    <x-slot name="title">
-        Dashboard
-    </x-slot>
+@extends('layouts.app')
 
+@section('content')
     <div class="card">
         <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, reprehenderit.</p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium delectus deleniti, ducimus ea enim est, explicabo ipsa maiores molestias nemo nihil odit porro reiciendis rerum, sit tempora voluptatem! Molestias, veniam!
         </div>
     </div>
-</x-app-layout>
+@endsection

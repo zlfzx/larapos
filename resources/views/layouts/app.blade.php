@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Larapos</title>
+    <title>@yield('title', 'Dashboard') - Larapos</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -44,9 +44,9 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? 'Dashboard' }}</h1>
+                    <h1 class="h3 mb-4 text-gray-800">@yield('title', 'Dashboard')</h1>
 
-                    {{ $slot }}
+                    @yield('content')
 
                 </div>
                 <!-- /.container-fluid -->
@@ -107,6 +107,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+
+    @yield('script')
 
 </body>
 
