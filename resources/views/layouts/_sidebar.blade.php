@@ -38,6 +38,12 @@
             <span>Satuan</span></a>
     </li>
 
+    <li class="nav-item {{ request()->routeIs('produk.index') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('produk.index') }}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Produk</span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
