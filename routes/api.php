@@ -18,8 +18,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Auth
+Route::group(['prefix' => 'v1/auth', 'namespace' => 'Api\V1'], function () {
+    Route::post('login', 'AuthController@login')->name('api.v1.auth.login');
+    Route::post('logout', 'AuthController@logout')->name('api.v1.auth.logout');
+});
 
-Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'middleware' => ['jwt.verify']], function () {
     Route::apiResource('kategori', 'KategoriController')->names('api.v1.kategori');
     Route::apiResource('satuan', 'SatuanController')->names('api.v1.satuan');
 });
