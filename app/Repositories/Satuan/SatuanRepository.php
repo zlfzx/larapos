@@ -12,4 +12,9 @@ class SatuanRepository extends BaseRepository
         parent::__construct($model);
         $this->model = $model;
     }
+
+    public function query()
+    {
+        return $this->model->query();
+    }
 }
