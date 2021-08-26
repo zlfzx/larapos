@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Services\SatuanService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

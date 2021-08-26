@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['namespace' => 'Dashboard', 'middleware' => ['auth']], function () {
     // Kaegori
     Route::apiResource('kategori', 'KategoriController');
     Route::match(['get', 'post'], 'kategori/datatable', 'KategoriController@datatable')->name('kategori.datatable');
