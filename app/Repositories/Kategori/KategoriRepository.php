@@ -13,4 +13,9 @@ class KategoriRepository extends BaseRepository
         $this->model = $model;
     }
 
+    public function query()
+    {
+        return $this->model->query();
+    }
+
 }

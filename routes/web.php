@@ -22,7 +22,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => ['auth']], function () {
+    // Kaegori
     Route::apiResource('kategori', 'KategoriController');
+    Route::match(['get', 'post'], 'kategori/datatable', 'KategoriController@datatable')->name('kategori.datatable');
+
     Route::apiResource('satuan', 'SatuanController');
 });
 
