@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Satuan\SatuanRequest;
 use App\Services\SatuanService;
 use App\Traits\ApiResponse;
-use Illuminate\Http\Request;
 
 class SatuanController extends Controller
 {
@@ -39,7 +39,7 @@ class SatuanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(SatuanRequest $request)
     {
         $response = $this->service->create($request->all());
 
@@ -64,7 +64,7 @@ class SatuanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SatuanRequest $request, $id)
     {
         //
     }

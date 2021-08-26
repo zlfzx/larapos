@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Satuan\SatuanRequest;
 use App\Services\SatuanService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -48,7 +48,7 @@ class SatuanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(SatuanRequest $request)
     {
         try {
             $response = $this->service->create($request->all());
@@ -83,7 +83,7 @@ class SatuanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(SatuanRequest $request, $id)
     {
         try {
             $response = $this->service->update($request->all(), $id);
