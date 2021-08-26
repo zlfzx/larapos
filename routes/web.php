@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::match(['get', 'post'], 'kategori/datatable', 'KategoriController@datatable')->name('kategori.datatable');
 
     Route::apiResource('satuan', 'SatuanController');
+    Route::match(['get', 'post'], 'satuan/datatable', 'SatuanController@datatable')->name('satuan.datatable');
 });
 
 require __DIR__.'/auth.php';
