@@ -26,8 +26,12 @@ Route::group(['namespace' => 'Dashboard', 'middleware' => ['auth']], function ()
     Route::apiResource('kategori', 'KategoriController');
     Route::match(['get', 'post'], 'kategori/datatable', 'KategoriController@datatable')->name('kategori.datatable');
 
+    // Satuan
     Route::apiResource('satuan', 'SatuanController');
     Route::match(['get', 'post'], 'satuan/datatable', 'SatuanController@datatable')->name('satuan.datatable');
+
+    // Produk
+    Route::apiResource('produk', 'ProdukController');
 });
 
 require __DIR__.'/auth.php';
