@@ -8,6 +8,11 @@ use Illuminate\Support\Collection;
 interface RepositoryInterface
 {
     /**
+     * @return mixed
+     */
+    public function query();
+
+    /**
      * Find by id
      * @param $id
      * @return Model|null
