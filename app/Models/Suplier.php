@@ -11,6 +11,8 @@ class Suplier extends Model
 
     protected $table = 'suplier';
 
+    protected $guarded = [];
+
     public function produk()
     {
         return $this->hasMany(Produk::class, 'produk_id', 'id');

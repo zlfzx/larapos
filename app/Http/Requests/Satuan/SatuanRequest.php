@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Satuan;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseRequest;
 
-class SatuanRequest extends FormRequest
+class SatuanRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

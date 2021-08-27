@@ -27,4 +27,5 @@ Route::group(['prefix' => 'v1/auth', 'namespace' => 'Api\V1'], function () {
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1', 'middleware' => ['jwt.verify']], function () {
     Route::apiResource('kategori', 'KategoriController')->names('api.v1.kategori');
     Route::apiResource('satuan', 'SatuanController')->names('api.v1.satuan');
+    Route::apiResource('suplier', 'SuplierController')->names('api.v1.suplier');
 });

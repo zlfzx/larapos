@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Repositories\Suplier\SuplierRepository;
 
-class SuplierService
+class SuplierService extends BaseService
 {
     /**
      * @var SuplierRepository
@@ -15,6 +15,7 @@ class SuplierService
 
     public function __construct(SuplierRepository $repository)
     {
+        parent::__construct($repository);
         $this->repository = $repository;
     }
 
