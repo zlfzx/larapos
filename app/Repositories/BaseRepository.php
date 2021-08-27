@@ -20,6 +20,11 @@ class BaseRepository implements RepositoryInterface
         $this->model = $model;
     }
 
+    public function query()
+    {
+        return $this->model->query();
+    }
+
     public function find($id): ?Model
     {
         return $this->model->find($id);
