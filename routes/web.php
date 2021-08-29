@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('guest');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,6 +29,10 @@ Route::group(['namespace' => 'Dashboard', 'middleware' => ['auth']], function ()
     // Satuan
     Route::apiResource('satuan', 'SatuanController');
     Route::match(['get', 'post'], 'satuan/datatable', 'SatuanController@datatable')->name('satuan.datatable');
+
+    // Suplier
+    Route::apiResource('suplier', 'SuplierController');
+    Route::match(['get', 'post'], 'suplier/datatable', 'SuplierController@datatable')->name('suplier.datatable');
 
     // Produk
     Route::apiResource('produk', 'ProdukController');

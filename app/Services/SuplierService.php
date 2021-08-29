@@ -19,4 +19,9 @@ class SuplierService extends BaseService
         $this->repository = $repository;
     }
 
+    public function datatable()
+    {
+        return $this->repository->query();
+    }
+
 }

@@ -28,11 +28,11 @@ class SuplierRequest extends BaseRequest
             case 'POST':
                 $rules = [
                     'nama' => 'required|unique:suplier,nama',
-                    'provinsi' => 'nullable',
-                    'kota' => 'nullable',
-                    'kecamatan' => 'nullable',
-                    'kelurahan' => 'nullable',
-                    'alamat' => 'nullable',
+                    'provinsi' => 'required',
+                    'kota' => 'required',
+                    'kecamatan' => 'required',
+                    'kelurahan' => 'required',
+                    'alamat' => 'required',
                     'telepon' => 'required'
                 ];
                 break;
