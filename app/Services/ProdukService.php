@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Repositories\Produk\ProdukRepository;
 
-class ProdukService
+class ProdukService extends BaseService
 {
     /**
      * @var ProdukRepository
@@ -15,7 +15,13 @@ class ProdukService
 
     public function __construct(ProdukRepository $repository)
     {
+        parent::__construct($repository);
         $this->repository = $repository;
+    }
+
+    public function datatable()
+    {
+        return $this->repository->datatable();
     }
 
 }

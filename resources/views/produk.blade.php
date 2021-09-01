@@ -3,6 +3,8 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 @endsection
 
 @section('content')
@@ -23,7 +25,6 @@
                             <th>Stok</th>
                             <th>Satuan</th>
                             <th>Harga Beli</th>
-                            <th>Markup</th>
                             <th>Harga Jual</th>
                             <th>Opsi</th>
                         </tr>
@@ -34,6 +35,7 @@
         </div>
     </div>
 
+    {{-- Modal Tambah Produk --}}
     <div class="modal fade" id="modalTambahProduk">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -49,27 +51,23 @@
                         </div>
                         <div class="form-group">
                             <label for="addKategori">Kategori</label>
-                            <select name="kategori_id" id="addKategori" class="form-control"></select>
+                            <select name="kategori_id" id="addKategori" class="form-control select-kategori"></select>
                         </div>
                         <div class="form-group">
                             <label for="addStok">Stok</label>
-                            <input type="number" name="stok" id="addStok" class="form-control">
+                            <input type="number" name="stok" min="0" id="addStok" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="addSatuan">Satuan</label>
-                            <select name="satuan_id" id="addSatuan" class="form-control"></select>
+                            <select name="satuan_id" id="addSatuan" class="form-control select-satuan"></select>
                         </div>
                         <div class="form-group">
                             <label for="addHargaBeli">Harga Beli</label>
-                            <input type="number" name="harga_beli" id="addHargaBeli" class="form-control">
+                            <input type="number" name="harga_beli" min="0" id="addHargaBeli" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="addMarkup">Markup</label>
-                            <input type="number" name="markup" class="form-control" id="addMarkup">
-                        </div>
-                        <div class="custom-control custom-checkbox small">
-                            <input type="checkbox" class="custom-control-input" id="addMarkupPersen">
-                            <label class="custom-control-label" for="addMarkupPersen">Persentase Markup</label>
+                            <label for="addHargaJual">Harga Jual</label>
+                            <input type="number" name="harga_jual" min="0" id="addHargaJual" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -79,13 +77,127 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal Tambah Foto --}}
+    <div class="modal fade" id="modalFotoProduk">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Foto Produk</h4>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped" id="tbFoto">
+                        <thead class="text-center">
+                            <tr>
+                                <th>No.</th>
+                                <th>Foto</th>
+                                <th>Keterangan</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        const tableProduk = $('#tbProduk').DataTable()
+        const selectKategori = $('.select-kategori').select2({
+            theme: 'bootstrap4',
+            placeholder: "Pilih Kategori",
+            ajax: {
+                url: "{{ route('kategori.select2') }}",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        term: params.term
+                    }
+                }
+            }
+        })
+
+        const selectSatuan = $('.select-satuan').select2({
+            theme: 'bootstrap4',
+            placeholder: "Pilih Satuan",
+            ajax: {
+                url: "{{ route('satuan.select2') }}",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        term: params.term
+                    }
+                }
+            }
+        })
+
+        const tableProduk = $('#tbProduk').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('produk.datatable') }}"
+            },
+            columns: [
+                {data: 'index', name: 'id'},
+                {data: 'foto', name: 'id'},
+                {data: 'nama', name: 'nama'},
+                {data: 'kategori.nama', name: 'kategori.nama'},
+                {data: 'stok', name: 'stok'},
+                {data: 'satuan.kode', name: 'satuan.kode'},
+                {data: 'harga_beli', name: 'harga_beli'},
+                {data: 'harga_jual', name: 'harga_jual'},
+                {data: 'opsi', name: 'id'}
+            ]
+        })
+
+        // Tambah Produk
+        const formTambahProduk = document.getElementById('formTambahProduk')
+        formTambahProduk.addEventListener('submit', function (e) {
+            e.preventDefault()
+            const form = new FormData(this)
+
+            $.post({
+                url: "{{ route('produk.store') }}",
+                data: form,
+                processData: false,
+                contentType: false
+            }).then(function (res) {
+                Swal.fire('Berhasil', 'Produk berhasil ditambahkan', 'success')
+                formTambahProduk.reset()
+                tableProduk.draw()
+            }).catch(err => errResponse('formTambahProduk', err))
+        })
+
+        // Foto Produk
+        const modalFotoProduk = $('#modalFotoProduk')
+        let tableFoto = null
+        tableProduk.on('click', '.btn-foto-produk', function () {
+            const data = $(this).data()
+
+            tableFoto = $('#tbFoto').DataTable({
+                destroy: true
+            })
+
+            modalFotoProduk.modal('show')
+        })
+
+        // Edit produk
+        const modalEditProduk = $('#modalEditProduk')
+        tableProduk.on('click', '.btn-edit-produk', function () {
+            const data = $(this).data()
+        })
+
+
+        // Hapus Produk
+        tableProduk.on('click', '.btn-hapus-produk', function () {
+            const data= $(this).data()
+        })
+
     </script>
 @endsection

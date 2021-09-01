@@ -7,6 +7,7 @@ use App\Http\Requests\Satuan\SatuanRequest;
 use App\Services\SatuanService;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Request;
 
 class SatuanController extends Controller
 {
@@ -35,7 +36,7 @@ class SatuanController extends Controller
         return DataTables::of($this->service->datatable())
             ->addIndexColumn()
             ->addColumn('opsi', function ($data) {
-                return '<button class="btn btn-sm btn-warning btn-edit" data-id="'.$data->id.'" data-nama="'.$data->nama.'" data-kode="'.$data->kode.'"><i class="fas fa-edit"></i></button> 
+                return '<button class="btn btn-sm btn-warning btn-edit" data-id="'.$data->id.'" data-nama="'.$data->nama.'" data-kode="'.$data->kode.'"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-sm btn-danger btn-hapus" data-id="'.$data->id.'"><i class="fas fa-trash"></i></button>';
             })
             ->rawColumns(['opsi'])
@@ -121,5 +122,15 @@ class SatuanController extends Controller
             'status' => TRUE,
             'data' => $response
         ], Response::HTTP_OK);
+    }
+
+    /**
+     * Select2
+     */
+    public function select2(Request $request)
+    {
+        $response = $this->service->select2($request);
+
+        return response()->json($response, Response::HTTP_OK);
     }
 }

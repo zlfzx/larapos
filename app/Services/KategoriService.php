@@ -24,4 +24,11 @@ class KategoriService extends BaseService
         return $this->repository->query();
     }
 
+    public function select2($request)
+    {
+        $data['results'] =  $this->repository->select2();
+
+        return $data;
+    }
+
 }

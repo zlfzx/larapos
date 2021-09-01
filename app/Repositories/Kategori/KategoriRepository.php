@@ -13,4 +13,9 @@ class KategoriRepository extends BaseRepository
         $this->model = $model;
     }
 
+    public function select2()
+    {
+        return $this->model->select('id', 'nama as text')->get();
+    }
+
 }

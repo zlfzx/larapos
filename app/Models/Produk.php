@@ -11,6 +11,13 @@ class Produk extends Model
 
     protected $table = 'produk';
 
+    protected $guarded = [];
+
+    public function foto()
+    {
+        return $this->hasOne(ProdukFoto::class, 'produk_id', 'id');
+    }
+
     public function produkFoto()
     {
         return $this->hasMany(ProdukFoto::class, 'produk_id', 'id');

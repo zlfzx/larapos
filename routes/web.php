@@ -22,19 +22,22 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['namespace' => 'Dashboard', 'middleware' => ['auth']], function () {
-    // Kaegori
-    Route::apiResource('kategori', 'KategoriController');
+    // Kategori
     Route::match(['get', 'post'], 'kategori/datatable', 'KategoriController@datatable')->name('kategori.datatable');
+    Route::match(['get', 'post'], 'kategori/select2', 'KategoriController@select2')->name('kategori.select2');
+    Route::apiResource('kategori', 'KategoriController');
 
     // Satuan
-    Route::apiResource('satuan', 'SatuanController');
     Route::match(['get', 'post'], 'satuan/datatable', 'SatuanController@datatable')->name('satuan.datatable');
+    Route::match(['get', 'post'], 'satuan/select2', 'SatuanController@select2')->name('satuan.select2');
+    Route::apiResource('satuan', 'SatuanController');
 
     // Suplier
-    Route::apiResource('suplier', 'SuplierController');
     Route::match(['get', 'post'], 'suplier/datatable', 'SuplierController@datatable')->name('suplier.datatable');
+    Route::apiResource('suplier', 'SuplierController');
 
     // Produk
+    Route::match(['get', 'post'], 'produk/datatable', 'ProdukController@datatable')->name('produk.datatable');
     Route::apiResource('produk', 'ProdukController');
 });
 

@@ -22,9 +22,8 @@ class CreateProdukTable extends Migration
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->unsignedBigInteger('satuan_id')->nullable();
             $table->integer('stok')->default(0);
-            $table->integer('harga')->default(0);
-            $table->integer('markup')->default(0);
-            $table->integer('markup_persen')->default(0);
+            $table->integer('harga_beli')->default(0);
+            $table->integer('harga_jual')->default(0);
             $table->integer('aktif')->default(1);
             $table->timestamps();
 

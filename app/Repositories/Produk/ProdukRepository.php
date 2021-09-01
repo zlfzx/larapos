@@ -12,4 +12,13 @@ class ProdukRepository extends BaseRepository
         parent::__construct($model);
         $this->model = $model;
     }
+
+    public function datatable()
+    {
+        return $this->model->with([
+            'foto',
+            'kategori',
+            'satuan'
+        ]);
+    }
 }
