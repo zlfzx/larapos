@@ -39,6 +39,11 @@ Route::group(['namespace' => 'Dashboard', 'middleware' => ['auth']], function ()
     // Produk
     Route::match(['get', 'post'], 'produk/datatable', 'ProdukController@datatable')->name('produk.datatable');
     Route::apiResource('produk', 'ProdukController');
+
+    // Produk Foto
+    Route::match(['get', 'post'], 'produk-foto/datatable', 'ProdukFotoController@datatable')->name('produk_foto.datatable');
+    Route::post('produk-foto', 'ProdukFotoController@store')->name('produk_foto.store');
+    Route::delete('produk-foto/{id}', 'ProdukFotoController@destroy')->name('produk_foto.destroy');
 });
 
 require __DIR__.'/auth.php';

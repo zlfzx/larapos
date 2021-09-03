@@ -11,6 +11,8 @@ class ProdukFoto extends Model
 
     protected $table = 'produk_foto';
 
+    protected $guarded = [];
+
     public function produk()
     {
         return $this->belongsTo(Produk::class, 'produk_id', 'id');

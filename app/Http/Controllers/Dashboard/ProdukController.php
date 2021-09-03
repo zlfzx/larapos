@@ -44,7 +44,8 @@ class ProdukController extends Controller
                 return $html;
             })
             ->addColumn('opsi', function ($data) {
-                return 'ok';
+                return '<button class="btn btn-sm btn-warning btn-edit-produk" data-id="'.$data->id.'" data-item="'.htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8').'"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger btn-hapus-produk" data-id="'.$data->id.'"><i class="fas fa-trash"></i></button>';
             })
             ->rawColumns(['foto', 'opsi'])
             ->make(true);

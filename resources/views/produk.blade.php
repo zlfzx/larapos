@@ -15,7 +15,7 @@
                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalTambahProduk"><i class="fas fa-plus"></i> Tambah Produk</button>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped display nowrap text-center" id="tbProduk">
+                    <table class="table table-striped display nowrap w-100 text-center" id="tbProduk">
                         <thead>
                         <tr>
                             <th>No.</th>
@@ -71,14 +71,14 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-sm btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {{-- Modal Tambah Foto --}}
+    {{-- Modal Foto --}}
     <div class="modal fade" id="modalFotoProduk">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -87,7 +87,9 @@
                     <button class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-striped" id="tbFoto">
+                    <button class="btn btn-sm btn-success" id="btnTambahFoto" data-toggle="modal" data-target="#modalTambahFoto"><i class="fas fa-plus"></i> Tambah</button>
+                    <hr>
+                    <table class="table table-striped display nowrap w-100" id="tbFoto">
                         <thead class="text-center">
                             <tr>
                                 <th>No.</th>
@@ -98,6 +100,78 @@
                         </thead>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Tambah Foto --}}
+    <div class="modal fade" id="modalTambahFoto">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Foto</h4>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form id="formTambahFoto">
+                    <input type="hidden" name="produk_id" id="addFotoProdukId">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="addFoto">Foto</label>
+                            <input type="file" name="foto" id="addFoto" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="addDeskripsi">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" id="addDeskripsi" cols="30" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Edit Produk --}}
+    <div class="modal fade" id="modalEditProduk">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Produk</h4>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form id="formEditProduk">
+                    <input type="hidden" id="editProdukId">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="editNama">Nama</label>
+                            <input type="text" name="nama" class="form-control" id="editNama" placeholder="Masukkan nama produk">
+                        </div>
+                        <div class="form-group">
+                            <label for="editKategori">Kategori</label>
+                            <select name="kategori_id" id="editKategori" class="form-control select-kategori"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editStok">Stok</label>
+                            <input type="number" name="stok" min="0" id="editStok" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="editSatuan">Satuan</label>
+                            <select name="satuan_id" id="editSatuan" class="form-control select-satuan"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editHargaBeli">Harga Beli</label>
+                            <input type="number" name="harga_beli" min="0" id="editHargaBeli" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="editHargaJual">Harga Jual</label>
+                            <input type="number" name="harga_jual" min="0" id="editHargaJual" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -180,23 +254,108 @@
         tableProduk.on('click', '.btn-foto-produk', function () {
             const data = $(this).data()
 
+            $('#addFotoProdukId').val(data.id)
+
             tableFoto = $('#tbFoto').DataTable({
-                destroy: true
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('produk_foto.datatable') }}",
+                    data: {
+                        produk_id: data.id
+                    }
+                },
+                columns: [
+                    {data: 'index', name: 'id', className: 'text-center'},
+                    {
+                        data: 'foto', name: 'file', render: function (data) {
+                            return `<img src="${data}" class="img-fluid">`
+                        }
+                    },
+                    {data: 'deskripsi', name: 'deskripsi'},
+                    {data: 'opsi', name: 'id', className: 'text-center'},
+                ]
             })
 
             modalFotoProduk.modal('show')
+        })
+
+        // Tambah foto produk
+        const formTambahFoto = document.getElementById('formTambahFoto')
+        const modalTambahFoto = $('#modalTambahFoto')
+        formTambahFoto.addEventListener('submit', function (e) {
+            e.preventDefault()
+            const form = new FormData(this)
+
+            $.post({
+                url: "{{ route('produk_foto.store') }}",
+                processData: false,
+                contentType: false,
+                data: form
+            }).then(function (res) {
+                formTambahFoto.reset()
+                tableFoto.draw()
+                modalTambahFoto.modal('hide')
+            }).catch(err => errResponse('formTambahFoto', err))
+        })
+
+        // Hapus foto produk
+        $(document).on('click', '.btn-hapus-foto', function () {
+            const data = $(this).data()
+
+            Swal.fire({
+                title: 'Hapus Foto',
+                text: "Anda yakin ingin menghapus foto produk tersebut?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then(hapus => {
+                if (hapus.isConfirmed) {
+                    $.ajax({
+                        url: "/produk-foto/" + data.id,
+                        type: 'DELETE'
+                    }).then(function (res) {
+                        Swal.fire('Berhasil', 'Foto produk berhasil dihapus', 'success')
+                        tableFoto.draw()
+                    })
+                }
+            })
         })
 
         // Edit produk
         const modalEditProduk = $('#modalEditProduk')
         tableProduk.on('click', '.btn-edit-produk', function () {
             const data = $(this).data()
+
+            modalEditProduk.modal('show')
         })
 
 
         // Hapus Produk
         tableProduk.on('click', '.btn-hapus-produk', function () {
             const data= $(this).data()
+
+            Swal.fire({
+                title: 'Hapus',
+                text: 'Anda yakin ingin mengahpus Produk tersebut',
+                icon: 'question',
+                showCancelButton: true,
+                cancelButtonText: 'Tidak',
+                confirmButtonText: 'Ya'
+            }).then(function (hapus) {
+                if (hapus.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('produk.index') }}/" + data.id,
+                        type: "DELETE",
+                        success: function (res) {
+                            tableProduk.draw()
+                            Swal.fire('Berhasil', 'Produk berhasil dihapus', 'success')
+                        }
+                    })
+                }
+            })
         })
 
     </script>

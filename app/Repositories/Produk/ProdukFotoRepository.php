@@ -12,4 +12,9 @@ class ProdukFotoRepository extends BaseRepository
         parent::__construct($model);
         $this->model = $model;
     }
+
+    public function datatable($produkId)
+    {
+        return $this->model->where('produk_id', $produkId);
+    }
 }
